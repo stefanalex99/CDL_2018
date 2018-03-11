@@ -1,0 +1,74 @@
+Hermeniuc Stefan-Alexandru
+Faculty of Automatic Control and Computer Science,
+Polytechnica University of Bucharest
+314CA
+
+Distributed execution simulator
+
+    In the implementation I used different functions which can be separated into
+three main categories:
+
+
+
+1) Utils:
+
+
+    a) cmds_read(): a function which reads the input from the standard input
+    stream
+
+    b) increment(): a function which increments by one every element of a vector
+    of ints smaller than a certain number
+
+    c) check(): a function which checks if a vector of ints has at least one
+    element smaller than a certain number
+
+    * To avoid parsing the second parameter of the commands I have used a
+    dictionary(map). *
+
+    d) generate_reg_names(): a function which generates the names of the
+    registers in the following format: Ri for i = 0 : 31
+
+    e) initialize_reg(): a function which initializes every register with 0
+    with the except of the first one which has the default value equal to the
+    index of its processor
+
+    f) print(): a function which prints the output in the requested format
+
+
+
+2) Commands:
+
+
+        Each command has a parameter p1 which is the name of the command, a
+    paramter p2 which can either be a number (in the case of the snd and jgz
+    commands) or a register, and a parameter p3 which can either be a register
+    or an int.
+
+    a) set(): a function which sets the value for a certain register
+
+    b) add(): a function which adds a certain number to the value of a register
+
+    c) mul(): a function which multiplies the value of a register by a certain
+    number
+
+    d) mod(): a function which calculates the value of a register modulo a
+    certain number
+
+    e) jgz(): a function which executes a jump over a certain number of commands
+    if the value of the first parameter is greater than 0
+
+    For the snd and rcv commands queues have been used to load the values sent
+    with the first command and unload them with the second
+
+
+
+3) Execution:
+
+
+    a) proc_run(): a function which parses a command and executes it for a
+    single processor
+
+    b) cmds_execute(): a function which executes all the commands for all the
+    processors
+
+    c) gen_result(): a function which generates the output and prints it
