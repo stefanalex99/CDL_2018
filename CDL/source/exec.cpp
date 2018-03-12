@@ -60,23 +60,28 @@ void cmds_execute(std::vector<lines> commands,
 
     for (; check(iters, size); increment(iters, size)) {
         for (int i = 0; i < N - 1; i++) {
-            if (commands[iters[i]].p1 == "rcv") {
-                if (sndto[i].empty()) {
+            if (iters[i] < size) {
+                if (commands[iters[i]].p1 == "rcv") {
+                    if (sndto[i].empty()) {
+                        return;
+                    }
+                }
+
+                proc_run(iters[i], commands, registers, regs[i], sndto[i],
+                    sndto[i + 1]);
+            }
+        }
+
+        if (iters[N - 1] < size) {
+            if (commands[iters[N - 1]].p1 == "rcv") {
+                if (sndto[N - 1].empty()) {
                     return;
                 }
             }
-            proc_run(iters[i], commands, registers, regs[i], sndto[i],
-            sndto[i + 1]);
-        }
 
-        if (commands[iters[N - 1]].p1 == "rcv") {
-            if (sndto[N - 1].empty()) {
-                return;
-            }
+            proc_run(iters[N - 1], commands, registers, regs[N - 1], sndto[N - 1],
+            sndto[0]);
         }
-
-        proc_run(iters[N - 1], commands, registers, regs[N - 1], sndto[N - 1],
-        sndto[0]);
     }
 }
 
